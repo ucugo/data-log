@@ -1,21 +1,25 @@
-package com.mahul.controllers;
+package com.mahul.controllers.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
-public class ApplicationConroller {
+public class LoginConroller {
 
     private RestTemplate restTemplate;
 
     @Autowired
-    public ApplicationConroller(RestTemplate restTemplate) {
+    public LoginConroller(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    @RequestMapping(value = {"/"})
-    public String method() {
+    @RequestMapping(value = {"/mmmm"}, method = RequestMethod.POST)
+    public String login(HttpServletRequest request) {
 
         String result = restTemplate.getForObject("http://localhost:8080/test", String.class);
         return result;
