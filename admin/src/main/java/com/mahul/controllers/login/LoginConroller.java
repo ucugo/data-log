@@ -1,16 +1,11 @@
 package com.mahul.controllers.login;
 
-import com.mahull.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginConroller {
@@ -19,14 +14,23 @@ public class LoginConroller {
     public LoginConroller(RestTemplate restTemplate) {
     }
 
-    @RequestMapping(value = "/")
-    public String login() {
-            return "home";
+    @RequestMapping("login")
+    public String login() {     return "login";
     }
 
-//    @RequestMapping(value = {"/login.html"}, method = RequestMethod.POST)
-//    public String login(@ModelAttribute Login login, Model model) {
-//        model.addAttribute("login", login);
-//        return "/login.html";
-//    }
+
+    @RequestMapping(value = {"login"}, method = RequestMethod.POST)
+    public String logins() {
+        return "login";
+    }
+
+    @RequestMapping("home")
+    public String home() {
+        return "home";
+    }
+
+    @RequestMapping("hello")
+    public String hello() {
+        return "hello";
+    }
 }
