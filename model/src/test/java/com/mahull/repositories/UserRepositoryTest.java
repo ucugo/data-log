@@ -40,7 +40,7 @@ public class UserRepositoryTest {
         user.setId(10l);
         userRepository.save(user);
 
-        User returnedUser = userRepository.get(user);
+        User returnedUser = userRepository.get(user, User.class);
 
         Assertions.assertThat(returnedUser).isNotNull();
 

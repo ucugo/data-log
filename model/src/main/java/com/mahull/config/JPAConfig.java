@@ -2,7 +2,10 @@ package com.mahull.config;
 
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.dialect.MySQL5Dialect;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -29,6 +33,8 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.mahull"})
+@EntityScan({"com.mahull.model"})
+@EnableAutoConfiguration
 public class JPAConfig {
 
     @Bean
@@ -41,6 +47,7 @@ public class JPAConfig {
     }
 
     @Bean
+    @ConfigurationProperties(prefix="ugo")
     public DataSource dataSource(){
         LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy = new LazyConnectionDataSourceProxy();
         Context ctx;

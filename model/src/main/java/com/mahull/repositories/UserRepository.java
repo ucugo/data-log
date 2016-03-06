@@ -17,12 +17,13 @@ public class UserRepository extends Repository<User> {
         super(entityManager);
     }
 
-    public User get(User user) {
+    public User get(User user, Class<User> clazz) {
         Objects.requireNonNull(user);
-        return super.get(user, User.class);
+        return super.get(user, clazz);
     }
 
     public void save(User user) {
+        Objects.requireNonNull(user);
         super.save(user);
     }
 }
