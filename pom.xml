@@ -28,6 +28,12 @@
         <cucumber.version>1.2.4</cucumber.version>
         <assertj.version>3.3.0</assertj.version>
         <junit.version>4.12</junit.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
+        <hsqldb.version>2.3.3</hsqldb.version>
+        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate-javax-api.version>1.0.0.Final</hibernate-javax-api.version>
+        <spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>
     </properties>
 
     <dependencyManagement>
@@ -55,11 +61,6 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-mongodb</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
@@ -69,6 +70,57 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data-jpa.version}</version>
+            </dependency>
+
+            <!-- Hibernate jars-->
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.1-api</artifactId>
+                <version>${hibernate-javax-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>el-api</artifactId>
+                <version>2.2</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <!-- Database drivers-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hsqldb</groupId>
+                <artifactId>hsqldb</artifactId>
+                <version>${hsqldb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+            </dependency>
 
 
             <!-- Cucumber-->
@@ -108,19 +160,19 @@
     </dependencyManagement>
 
     <build>
-    <plugins>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.2</version>
-        <configuration>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
-            <compilerArgument>-Xlint:all</compilerArgument>
-        </configuration>
-    </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                </configuration>
+            </plugin>
 
-    </plugins>
+        </plugins>
     </build>
 
     <modules>

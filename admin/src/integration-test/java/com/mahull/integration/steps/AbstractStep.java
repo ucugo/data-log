@@ -30,14 +30,11 @@ public class AbstractStep {
     private MockRestServiceServer mockServer;
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
     private LoginConroller loginConroller;
     @Before
     public void init() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(loginConroller).build();
-        this.mockServer = MockRestServiceServer.createServer(restTemplate);
+//        this.mockMvc = MockMvcBuilders.standaloneSetup(loginConroller).build();
+//        this.mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
     @After
@@ -47,9 +44,9 @@ public class AbstractStep {
 
     @Given("^I have a calculator$")
     public void i_have_a_calculator() throws Throwable {
-        this.mockServer.expect(requestTo("http://localhost:8080/test"))
-                .andRespond(withSuccess("hello", MediaType.APPLICATION_JSON));
-        ResultActions perform = this.mockMvc.perform(get("/"));
+//        this.mockServer.expect(requestTo("http://localhost:8080/test"))
+//                .andRespond(withSuccess("hello", MediaType.APPLICATION_JSON));
+//        ResultActions perform = this.mockMvc.perform(get("/"));
 
 //        assertEquals(perform.andReturn().getResponse().getContentAsString(), "hello");
     }
