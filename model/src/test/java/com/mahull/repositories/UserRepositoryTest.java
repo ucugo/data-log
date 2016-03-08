@@ -37,7 +37,7 @@ public class UserRepositoryTest {
         user.setFirstName("Barry");
         user.setLastName("Ugo");
         user.setUserName("username");
-        user.setId(10l);
+        user.setId(20l);
         userRepository.save(user);
 
         User returnedUser = userRepository.get(user, User.class);

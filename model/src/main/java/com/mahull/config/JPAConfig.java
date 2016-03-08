@@ -1,18 +1,23 @@
 package com.mahull.config;
 
-import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
+import com.mahull.hibernate.HibernateNamingStrategy;
 import org.hibernate.dialect.MySQL5Dialect;
+import org.hibernate.dialect.MySQLDialect;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,25 +32,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static org.springframework.orm.jpa.vendor.Database.MYSQL;
+
 /**
  * Created by Ugo on 05/03/2016.
  */
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.mahull"})
-@EntityScan({"com.mahull.model"})
-@EnableAutoConfiguration
 public class JPAConfig {
 
     @Bean
-    public EntityManagerFactory entityManagerFactory(EntityManagerFactoryBuilder builder,  DataSource dataSource){
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource){
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
 
-        return builder.dataSource(dataSource)
-                .packages("com.mahull.repositories", "com.mahull.model")
-                .properties(properties())
-                .build().getObject();
+        final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        bean.setJpaVendorAdapter(vendorAdapter);
+        bean.setDataSource(dataSource);
+        bean.setPackagesToScan("com/mahull/repositories", "com/mahull/model");
+        bean.afterPropertiesSet();
+        bean.setPersistenceUnitName("data_log");
+        bean.setJpaProperties(properties());
+        bean.setPersistenceXmlLocation("META-INF/persistence.xml");
+        return bean.getObject();
     }
-
     @Bean
     @ConfigurationProperties(prefix="ugo")
     public DataSource dataSource(){
@@ -57,12 +68,8 @@ public class JPAConfig {
         } catch (NamingException e) {
             throw new InternalError("Error in retrieving Context");
         }
-
-
         return lazyConnectionDataSourceProxy;
     }
-
-
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) throws NamingException {
@@ -72,26 +79,11 @@ public class JPAConfig {
         return transactionManager;
     }
 
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter(){
-        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.getJpaPropertyMap().put("database","MYSQL");
-        adapter.getJpaPropertyMap().put("generateDdl", "true");
-        adapter.getJpaPropertyMap().put("showSql", "true");
-        return adapter;
-    }
-
-    @Bean
-    public HibernateExceptionTranslator hibernateExceptionTranslator(){
-        HibernateExceptionTranslator hibernateExceptionTranslator = new HibernateExceptionTranslator();
-        return hibernateExceptionTranslator;
-    }
-
-    public Map<String, Object> properties(){
-        Map<String, Object> properties = new HashMap<>();
+    public Properties properties(){
+        Properties properties = new Properties();
         properties.put("hibernate.format_sql",true);
         properties.put("hibernate.hbm2ddl.auto","update");
-        properties.put("hibernate.implicit_naming_strategy",new ImplicitNamingStrategyJpaCompliantImpl());
+        properties.put("hibernate.ejb.naming_strategy",new HibernateNamingStrategy());
         properties.put("hibernate.dialect",new MySQL5Dialect());
         return properties;
     }

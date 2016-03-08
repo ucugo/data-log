@@ -2,6 +2,7 @@ package com.mahull.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,13 +12,13 @@ import javax.validation.constraints.NotNull;
 public class User extends ModelObject {
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, name = "firstname")
     private String firstName;
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, name = "lastname")
     private String lastName;
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, name = "username")
     private String userName;
 
     public String getFirstName() {

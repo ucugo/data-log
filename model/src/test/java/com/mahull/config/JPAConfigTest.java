@@ -2,18 +2,11 @@ package com.mahull.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-@Configuration
-@Import(value = JPAConfig.class)
-@EnableTransactionManagement
-@TestPropertySource("/application-test.properties")
-public class JPAConfigTest {
+public class JPAConfigTest extends JPAConfig {
 
     @Bean
     public DataSource dataSource(){
