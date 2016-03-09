@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -25,7 +28,12 @@ import java.util.Set;
 @TestPropertySource(locations = {"/application-test.properties"})
 public class UserRepositoryTest {
 
-    @Autowired private UserRepository userRepository;
+    private static final String FIRST_NAME = "Barry";
+    private static final String LAST_NAME = "Ugo";
+    private static final String USER_NAME = "username";
+    @Autowired
+    private UserRepository userRepository;
+
     @Before
     public void setUp() {
 
@@ -33,23 +41,53 @@ public class UserRepositoryTest {
 
     @Test
     public void whenNewUserIsAddedThenItShouldBeStoredInTheDatabase() {
-        User user = new User();
-        user.setFirstName("Barry");
-        user.setLastName("Ugo");
-        user.setUserName("username");
-//        user.setId(20l);
+        User user = getUser();
+
         userRepository.save(user);
 
         User returnedUser = userRepository.get(user, User.class);
+        assertThat(returnedUser).isNotNull();
+        assertThat(returnedUser.getFirstName()).isEqualTo(FIRST_NAME);
+        assertThat(returnedUser.getLastName()).isEqualTo(LAST_NAME);
+        assertThat(returnedUser.getUserName()).isEqualTo(USER_NAME);
+        validateConstraint(user, 0);
+    }
 
-        Assertions.assertThat(returnedUser).isNotNull();
+    @Test
+    public void whenUserDoesNotExistInTheDatabaseThenNoUserWillBeReturned() {
+        User user = getUser();
+        User returnedUser = userRepository.get(user, User.class);
 
-//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//
-//        Set<ConstraintViolation<User>> constraintViolations =
-//                factory.getValidator().validate(user);
-//
-//        Assertions.assertThat(constraintViolations.size()).isEqualTo(0);
+        assertThat(returnedUser).isNull();
+        validateConstraint(user, 0);
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenMandatoryFieldIsNotSetDuringSaveOrUpdate() {
+        User user = new User();
+
+        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> userRepository.save(user));
+        validateConstraint(user, 3);
+    }
+
+    @
+
+    private User getUser() {
+        User user = new User();
+        user.setFirstName(FIRST_NAME);
+        user.setLastName(LAST_NAME);
+        user.setUserName(USER_NAME);
+        return user;
+    }
+
+    private void validateConstraint(User user, int violationSize) {
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+
+        Set<ConstraintViolation<User>> constraintViolations =
+                factory.getValidator().validate(user);
+
+        assertThat(constraintViolations.size()).isEqualTo(violationSize);
     }
 
 }

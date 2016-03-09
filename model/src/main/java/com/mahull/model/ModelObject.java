@@ -1,14 +1,10 @@
 package com.mahull.model;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -20,11 +16,6 @@ public class ModelObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public long getId() {
         return id;

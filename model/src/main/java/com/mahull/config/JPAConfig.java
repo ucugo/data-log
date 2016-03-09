@@ -17,8 +17,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 import java.util.Properties;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -28,8 +29,10 @@ import java.util.Properties;
 @ComponentScan({"com.mahull"})
 public class JPAConfig {
 
+    private static final String PERSISTENCE_UNIT_NAME = "data_log";
+
     @Bean
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource){
+    public EntityManagerFactory entityManagerFactory(javax.sql.DataSource dataSource){
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
@@ -44,23 +47,23 @@ public class JPAConfig {
         return bean.getObject();
     }
     @Bean
-    public DataSource dataSource(){
-        LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy = new LazyConnectionDataSourceProxy();
+    public javax.sql.DataSource dataSource(){
+        DataSource dataSource;
         Context ctx;
         try {
             ctx = new InitialContext();
-            lazyConnectionDataSourceProxy.setTargetDataSource((DataSource) ctx.lookup("java:comp/env/jdbc/inventory"));
+            dataSource =((DataSource) ctx.lookup("java:comp/env/jdbc/inventory"));
         } catch (NamingException e) {
-            throw new InternalError("Error in retrieving Context");
+            throw new InternalError(String.format("Error in retrieving Context: %s", e.getCause()));
         }
-        return lazyConnectionDataSourceProxy;
+        return dataSource;
     }
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) throws NamingException {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
-        transactionManager.setPersistenceUnitName("inventory");
+        transactionManager.setPersistenceUnitName(PERSISTENCE_UNIT_NAME);
         return transactionManager;
     }
 

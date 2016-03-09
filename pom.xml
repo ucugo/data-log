@@ -34,6 +34,7 @@
         <hibernate.version>5.1.0.Final</hibernate.version>
         <hibernate-javax-api.version>1.0.0.Final</hibernate-javax-api.version>
         <spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>
+        <tomcat-jdbc.version>8.0.23</tomcat-jdbc.version>
     </properties>
 
     <dependencyManagement>
@@ -110,6 +111,15 @@
                 <version>2.2</version>
                 <!--<scope>test</scope>-->
             </dependency>
+
+            <!-- DataSource-->
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jdbc</artifactId>
+                <version>${tomcat-jdbc.version}</version>
+            </dependency>
+
 
 
             <!-- Database drivers-->
