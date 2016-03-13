@@ -19,5 +19,9 @@ public class ModelObject implements Serializable {
 
     public long getId() {
         return id;
+ }
+
+    protected boolean equalsBaseField(ModelObject other) {
+        return id == other.id;
     }
 }

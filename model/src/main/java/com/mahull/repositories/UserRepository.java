@@ -30,4 +30,8 @@ public class UserRepository extends Repository<User> {
         Objects.requireNonNull(user);
         super.save(user);
     }
+
+    public User getWithUserName(String userName) {
+        return super.getWithStatus(User.class, userName);
+    }
 }

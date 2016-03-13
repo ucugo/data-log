@@ -30,7 +30,8 @@ public class UserRepositoryTest {
 
     private static final String FIRST_NAME = "Barry";
     private static final String LAST_NAME = "Ugo";
-    private static final String USER_NAME = "username";
+    private static final String USER_NAME = "some_user_name";
+    private static final String SOME_PASSWORD = "password";
     @Autowired
     private UserRepository userRepository;
 
@@ -70,13 +71,26 @@ public class UserRepositoryTest {
         validateConstraint(user, 3);
     }
 
-    @
+    @Test
+    public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
+        userRepository.save(getUser());
+
+        User returnedUser = userRepository.getWithUserName(USER_NAME);
+
+        assertThat(returnedUser).isNotNull();
+        assertThat(returnedUser.getUserName()).isEqualTo(USER_NAME);
+
+
+
+
+    }
 
     private User getUser() {
         User user = new User();
         user.setFirstName(FIRST_NAME);
         user.setLastName(LAST_NAME);
         user.setUserName(USER_NAME);
+        user.setPassword(SOME_PASSWORD);
         return user;
     }
 
@@ -89,5 +103,6 @@ public class UserRepositoryTest {
 
         assertThat(constraintViolations.size()).isEqualTo(violationSize);
     }
+
 
 }

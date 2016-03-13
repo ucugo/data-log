@@ -11,14 +11,16 @@ import javax.validation.constraints.NotNull;
 public class User extends ModelObject {
 
     @NotNull
-    @Column(nullable = false, name = "firstname")
+    @Column(nullable = false)
     private String firstName;
     @NotNull
-    @Column(nullable = false, name = "lastname")
+    @Column(nullable = false)
     private String lastName;
     @NotNull
-    @Column(nullable = false, name = "username")
+    @Column(nullable = false)
     private String userName;
+    @Column(nullable = false)
+    private String password;
 
     public String getFirstName() {
         return firstName;
@@ -42,5 +44,29 @@ public class User extends ModelObject {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if (object != null &&  object.getClass() == User.class) {
+            return super.equalsBaseField((ModelObject)object);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        return result;
     }
 }
