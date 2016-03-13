@@ -28,9 +28,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(locations = {"/application-test.properties"})
 public class UserRepositoryTest {
 
-    private static final String FIRST_NAME = "Barry";
-    private static final String LAST_NAME = "Ugo";
-    private static final String USER_NAME = "some_user_name";
+    private static final String FIRST_NAME = "firstname";
+    private static final String LAST_NAME = "lastname";
+    private static final String USER_NAME = "username";
     private static final String SOME_PASSWORD = "password";
     @Autowired
     private UserRepository userRepository;
@@ -46,7 +46,7 @@ public class UserRepositoryTest {
 
         userRepository.save(user);
 
-        User returnedUser = userRepository.get(user, User.class);
+        User returnedUser = userRepository.get(User.class, user);
         assertThat(returnedUser).isNotNull();
         assertThat(returnedUser.getFirstName()).isEqualTo(FIRST_NAME);
         assertThat(returnedUser.getLastName()).isEqualTo(LAST_NAME);
@@ -57,7 +57,7 @@ public class UserRepositoryTest {
     @Test
     public void whenUserDoesNotExistInTheDatabaseThenNoUserWillBeReturned() {
         User user = getUser();
-        User returnedUser = userRepository.get(user, User.class);
+        User returnedUser = userRepository.get(User.class, user);
 
         assertThat(returnedUser).isNull();
         validateConstraint(user, 0);

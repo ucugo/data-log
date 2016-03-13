@@ -14,7 +14,6 @@ public class JPAConfigTest extends JPAConfig {
     public DataSource dataSource(){
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.HSQL)
-                .setName("data_log")
                 .build();
     }
 

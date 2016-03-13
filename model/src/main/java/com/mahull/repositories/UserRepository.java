@@ -2,11 +2,12 @@ package com.mahull.repositories;
 
 import com.mahull.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.Objects;
+
+import static com.mahull.query.UserQuery.FIND_USER_WITH_USERNAME;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -20,18 +21,13 @@ public class UserRepository extends Repository<User> {
         super(entityManager);
     }
 
-    @Modifying(clearAutomatically = true)
-    public User get(User user, Class clazz) {
-        Objects.requireNonNull(user);
-        return super.get(user, User.class);
-    }
-
     public void save(User user) {
         Objects.requireNonNull(user);
-        super.save(user);
+        getEntityManager().persist(user);
     }
 
     public User getWithUserName(String userName) {
-        return super.getWithStatus(User.class, userName);
+        return getEntityManager().createQuery(FIND_USER_WITH_USERNAME, User.class)
+                .setParameter("userName", userName).getSingleResult();
     }
 }
