@@ -2,6 +2,7 @@ package com.mahull.repositories;
 
 import com.mahull.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ public class UserRepository extends Repository<User> {
         super(entityManager);
     }
 
-    public void save(User user) {
+    public void save(User user) throws TransactionSystemException {
         Objects.requireNonNull(user);
         getEntityManager().persist(user);
     }
@@ -29,5 +30,9 @@ public class UserRepository extends Repository<User> {
     public User getWithUserName(String userName) {
         return getEntityManager().createQuery(FIND_USER_WITH_USERNAME, User.class)
                 .setParameter("userName", userName).getSingleResult();
+    }
+
+    public User updateUser(User user) {
+        return getEntityManager().merge(user);
     }
 }

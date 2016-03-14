@@ -2,6 +2,7 @@ package com.mahull.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
@@ -11,7 +12,7 @@ import javax.sql.DataSource;
 public class JPAConfigTest extends JPAConfig {
 
     @Bean
-    public DataSource dataSource(){
+    public EmbeddedDatabase dataSource(){
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.HSQL)
                 .build();

@@ -3,7 +3,6 @@ package com.mahul.security;
 import com.mahull.model.User;
 import com.mahull.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,11 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private org.springframework.security.core.userdetails.User loadUser(User user) {
 
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//        if(inventoryUser.isAdmin()){
-//            authorities.add(new SimpleGrantedAuthority(InventoryUser.ADMIN_ROLE));
-//        }
 
-        authorities.add(new SimpleGrantedAuthority("ADMIN_ROLE"));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
 
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
                 true, true, true, true, authorities);

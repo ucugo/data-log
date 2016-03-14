@@ -21,10 +21,6 @@ public class Repository<T extends ModelObject>  {
         return entityManager.find(clazz, entity.getId());
     }
 
-    protected Boolean contains(T entity) {
-        return entityManager.contains(entity);
-    }
-
     public EntityManager getEntityManager() {
         return entityManager;
     }

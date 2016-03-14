@@ -1,7 +1,11 @@
 package com.mahull.model;
 
+import com.mahull.security.Role;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,6 +25,10 @@ public class User extends ModelObject {
     private String userName;
     @Column(nullable = false)
     private String password;
+    @NotNull
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public String getFirstName() {
         return firstName;
@@ -52,6 +60,14 @@ public class User extends ModelObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
