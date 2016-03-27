@@ -22,20 +22,32 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncing>UTF-8</project.build.sourceEncing>
-        <spring.boot.version>1.2.0.RELEASE</spring.boot.version>
-        <maven-failsafe-plugin.version>2.18</maven-failsafe-plugin.version>
-        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-        <cucumber.version>1.2.4</cucumber.version>
+
+        <aspectjtools.version>1.8.8</aspectjtools.version>
         <assertj.version>3.3.0</assertj.version>
-        <junit.version>4.12</junit.version>
+
+        <checkstyle.version>6.17</checkstyle.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
+        <cucumber.version>1.2.4</cucumber.version>
+
         <hsqldb.version>2.3.3</hsqldb.version>
-        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
         <hibernate.version>5.1.0.Final</hibernate.version>
         <hibernate-javax-api.version>1.0.0.Final</hibernate-javax-api.version>
-        <tomcat-jdbc.version>8.0.23</tomcat-jdbc.version>
-        <aspectjtools.version>1.8.8</aspectjtools.version>
+
+        <javax.el.api.version>2.2</javax.el.api.version>
+        <junit.version>4.12</junit.version>
+
+        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+        <maven-failsafe-plugin.version>2.18</maven-failsafe-plugin.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+
+        <pitest-maven.version>1.1.9</pitest-maven.version>
+
         <spring-data-jpa.version>1.9.2.RELEASE</spring-data-jpa.version>
+        <spring.boot.version>1.2.0.RELEASE</spring.boot.version>
+
+        <tomcat-jdbc.version>8.0.23</tomcat-jdbc.version>
     </properties>
 
     <dependencyManagement>
@@ -113,7 +125,7 @@
             <dependency>
                 <groupId>javax.el</groupId>
                 <artifactId>el-api</artifactId>
-                <version>2.2</version>
+                <version>${javax.el.api.version}</version>
             </dependency>
 
 
@@ -177,16 +189,16 @@
                     <compilerArgument>-Xlint:all</compilerArgument>
                 </configuration>
             </plugin>
-
+            <!-- Checkstyle-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>6.17</version>
+                        <version>${checkstyle.version}</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -204,6 +216,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- PitTest-->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <configuration>
+                    <targetClasses>
+                        <param>com.mahull*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.mahull*</param>
+                    </targetTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -212,11 +238,23 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
                             <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest-maven.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
                         </reports>
                     </reportSet>
                 </reportSets>
