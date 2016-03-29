@@ -17,6 +17,7 @@ public class DeathRegisterSecurityConfigurer extends WebSecurityConfigurerAdapte
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/deaths/register")
                 .loginPage("/deaths/login")
                 .permitAll()
                 .and()

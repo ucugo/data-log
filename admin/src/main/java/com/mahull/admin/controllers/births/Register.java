@@ -18,14 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/births")
 public class Register extends BaseController {
 
-    @ModelAttribute(value = "/login")
-    public Model craftUser(Model model) {
-        model.addAttribute(new CraftUser());
-        return model;
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register")
     public String login() {
-        return "/births/register";
+        return "births/register";
     }
 }

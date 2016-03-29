@@ -6,6 +6,8 @@ package com.mahull.admin.util;
 public interface Constants {
 
     String HOME_VIEW = "home";
-    String BIRTTHS_LOGIN = "births/login";
+    String BIRTHS_LOGIN = "births/login";
+    String BIRTHS_REGISTER = "births/register";
     String DEATHS_LOGIN = "deaths/login";
+    String DEATHS_REGISTER = "deaths/register";
 }

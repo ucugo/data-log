@@ -20,6 +20,7 @@ public class BirthRegisterSecurityConfigurer extends WebSecurityConfigurerAdapte
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/births/register")
                 .loginPage("/births/login")
                 .permitAll()
                 .and()

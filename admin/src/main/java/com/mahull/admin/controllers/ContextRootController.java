@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value = "/*")
-public class RouteController extends BaseController {
+public class ContextRootController extends BaseController {
 
     /**
      * routing controller.
