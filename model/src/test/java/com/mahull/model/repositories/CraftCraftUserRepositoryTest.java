@@ -2,7 +2,9 @@ package com.mahull.model.repositories;
 
 import com.mahull.model.config.JpaConfigTest;
 import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.ModelObject;
 import com.mahull.model.security.Role;
+import com.mahull.model.util.TestCase;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +21,7 @@ import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
+import static com.mahull.model.security.Role.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -28,12 +31,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(locations = {"/application-test.properties"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CraftCraftUserRepositoryTest {
+public class CraftCraftUserRepositoryTest extends TestCase {
 
     private static final String FIRST_NAME = "firstname";
     private static final String LAST_NAME = "lastname";
     private static final String USER_NAME = "username@";
     private static final String SOME_PASSWORD = "password";
+    private static final Role User_ROLE = USER_ROLE;
     @Autowired
     private CraftUserRepository craftUserRepository;
 
@@ -53,6 +57,8 @@ public class CraftCraftUserRepositoryTest {
         assertThat(returnedCraftUser.getFirstName()).isEqualTo(FIRST_NAME);
         assertThat(returnedCraftUser.getLastName()).isEqualTo(LAST_NAME);
         assertThat(returnedCraftUser.getUserName()).isEqualTo(USER_NAME);
+        assertThat(returnedCraftUser.getPassword()).isEqualTo(SOME_PASSWORD);
+        assertThat(returnedCraftUser.getRole()).isEqualTo(User_ROLE);
         validateConstraint(craftUser, 0);
     }
 
@@ -70,7 +76,7 @@ public class CraftCraftUserRepositoryTest {
         CraftUser craftUser = new CraftUser();
 
         Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
-        validateConstraint(craftUser, 4);
+        validateConstraint(craftUser, 5);
     }
 
     @Test
@@ -96,7 +102,7 @@ public class CraftCraftUserRepositoryTest {
 
         CraftUser updatedCraftUser = craftUserRepository.updateUser(returnedCraftUser);
 
-        assertThat(updatedCraftUser).isEqualTo(returnedCraftUser);
+        assertThat(updatedCraftUser.getId()).isEqualTo(returnedCraftUser.getId());
         assertThat(updatedCraftUser.getFirstName()).isEqualTo(newName);
         validateConstraint(updatedCraftUser, 0);
     }
@@ -107,19 +113,7 @@ public class CraftCraftUserRepositoryTest {
         craftUser.setLastName(LAST_NAME);
         craftUser.setUserName(USER_NAME);
         craftUser.setPassword(SOME_PASSWORD);
-        craftUser.setRole(Role.USER_ROLE);
+        craftUser.setRole(User_ROLE);
         return craftUser;
     }
-
-    private void validateConstraint(CraftUser craftUser, int violationSize) {
-
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-
-        Set<ConstraintViolation<CraftUser>> constraintViolations =
-                factory.getValidator().validate(craftUser);
-
-        assertThat(constraintViolations.size()).isEqualTo(violationSize);
-    }
-
-
 }

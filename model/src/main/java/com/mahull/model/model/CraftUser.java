@@ -25,6 +25,7 @@ public class CraftUser extends ModelObject {
     @NotNull
     @Column(nullable = false)
     private String userName;
+    @NotNull
     @Column(nullable = false)
     private String password;
     @NotNull
@@ -70,21 +71,5 @@ public class CraftUser extends ModelObject {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object != null &&  object.getClass() == CraftUser.class) {
-            return super.equalsBaseField((ModelObject)object);
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        return result;
     }
 }

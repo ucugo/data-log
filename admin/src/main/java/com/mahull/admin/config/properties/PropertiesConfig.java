@@ -1,4 +1,4 @@
-package com.mahull.admin.config;
+package com.mahull.admin.config.properties;
 
 import com.mahull.admin.util.PropertiesFetcher;
 import org.springframework.context.annotation.ComponentScan;

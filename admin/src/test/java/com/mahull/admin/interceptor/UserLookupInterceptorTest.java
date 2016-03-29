@@ -1,4 +1,4 @@
-package com.mahull.admin.web;
+package com.mahull.admin.interceptor;
 
 import com.mahull.model.model.CraftUser;
 import com.mahull.model.repositories.CraftUserRepository;

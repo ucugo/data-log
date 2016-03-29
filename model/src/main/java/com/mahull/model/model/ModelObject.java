@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Ugo on 05/03/2016.
@@ -14,14 +15,11 @@ import javax.persistence.MappedSuperclass;
 public class ModelObject implements Serializable {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     public long getId() {
         return id;
-    }
-
-    protected boolean equalsBaseField(ModelObject other) {
-        return id == other.id;
     }
 }

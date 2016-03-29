@@ -1,14 +1,12 @@
 package com.mahull.model.integration.steps;
 
 
-import com.mahull.admin.controllers.login.LoginConroller;
 import com.mahull.model.integration.config.DataLogTestConfig;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,9 +22,6 @@ public class AbstractStep {
     private MockMvc mockMvc;
 
     private MockRestServiceServer mockServer;
-
-    @Autowired
-    private LoginConroller loginConroller;
     @Before
     public void init() {
 //        this.mockMvc = MockMvcBuilders.standaloneSetup(loginConroller).build();

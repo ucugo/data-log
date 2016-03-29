@@ -1,4 +1,4 @@
-package com.mahull.admin.web;
+package com.mahull.admin.interceptor;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
