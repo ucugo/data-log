@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Ugo on 15/03/2016.
  */
-public class BaseController {
+public abstract class BaseController {
 
     @Autowired
     private CraftUserRepository craftUserRepository;
