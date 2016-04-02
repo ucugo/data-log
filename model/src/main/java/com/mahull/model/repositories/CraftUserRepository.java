@@ -32,6 +32,10 @@ public class CraftUserRepository extends Repository<CraftUser> {
                 .setParameter("userName", userName).getSingleResult();
     }
 
+    public CraftUser getWithId(long id) {
+        return get(CraftUser.class, id);
+    }
+
     public CraftUser updateUser(CraftUser craftUser) {
         return getEntityManager().merge(craftUser);
     }

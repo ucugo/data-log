@@ -17,8 +17,8 @@ public class Repository<T extends ModelObject>  {
         this.entityManager = entityManager;
     }
 
-    protected T get(Class<T> clazz, T entity) {
-        return entityManager.find(clazz, entity.getId());
+    protected T get(Class<T> clazz, long id) {
+        return entityManager.find(clazz, id);
     }
 
     public EntityManager getEntityManager() {

@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by Ugo on 10/03/2016.
@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private User loadUser(CraftUser craftUser) {
 
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> authorities = new HashSet<>();
 
         authorities.add(new SimpleGrantedAuthority(craftUser.getRole().name()));
 

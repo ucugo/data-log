@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Births Register</title>
+</head>
+<body>
+<td>
+    <form action="#" th:action="@{/account/new-user}" th:object="${craftUser}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div><label> User Name : <input type="text" th:field="*{userName}"/> </label></div>
+        <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">username Error</td>
+        <div><input type="submit" value="Sign In"/></div>
+    </form>
+</td>
+</body>
+</html>

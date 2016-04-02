@@ -1,5 +1,6 @@
 package com.mahull.admin.config.mvc;
 
+import com.mahull.admin.interceptor.CurrentRequestInterceptor;
 import com.mahull.admin.interceptor.UserLookupInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,6 +13,7 @@ import static com.mahull.admin.util.Constants.BIRTHS_LOGIN;
 import static com.mahull.admin.util.Constants.BIRTHS_REGISTER;
 import static com.mahull.admin.util.Constants.CONTEXT_ROOT;
 import static com.mahull.admin.util.Constants.HOME_VIEW;
+import static com.mahull.admin.util.Constants.NEW_USER;
 
 
 @EnableAutoConfiguration
@@ -28,10 +30,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController(CONTEXT_ROOT).setViewName(HOME_VIEW);
         registry.addViewController(CONTEXT_ROOT.concat(BIRTHS_LOGIN)).setViewName(BIRTHS_LOGIN);
         registry.addViewController(CONTEXT_ROOT.concat(BIRTHS_REGISTER)).setViewName(BIRTHS_REGISTER);
+        registry.addViewController(CONTEXT_ROOT.concat(NEW_USER)).setViewName(NEW_USER);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLookupInterceptor);
+        registry.addInterceptor(new CurrentRequestInterceptor());
     }
 }

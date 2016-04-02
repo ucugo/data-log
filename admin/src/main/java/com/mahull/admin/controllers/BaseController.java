@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseController {
 
     @Autowired
-    private CraftUserRepository craftUserRepository;
+    protected CraftUserRepository craftUserRepository;
 
     protected CraftUser getCraftUser(HttpServletRequest request) {
-        return (CraftUser)request.getAttribute(CraftUser.REQUEST_SCOPED_ATTRIBUTE_NAME);
+
+        CraftUser craftUser = (CraftUser)request.getAttribute(CraftUser.REQUEST_SCOPED_ATTRIBUTE_NAME);
+        return craftUser == null ? new CraftUser() : craftUser;
     }
 }

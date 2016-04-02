@@ -8,5 +8,6 @@ public interface Constants {
     String HOME_VIEW = "home";
     String BIRTHS_LOGIN = "login";
     String BIRTHS_REGISTER = "register";
+    String NEW_USER = "account/new-user";
     String CONTEXT_ROOT = "/";
 }

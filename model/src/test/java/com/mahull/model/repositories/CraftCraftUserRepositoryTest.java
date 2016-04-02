@@ -52,7 +52,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         craftUserRepository.save(craftUser);
 
-        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser);
+        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
         assertThat(returnedCraftUser).isNotNull();
         assertThat(returnedCraftUser.getFirstName()).isEqualTo(FIRST_NAME);
         assertThat(returnedCraftUser.getLastName()).isEqualTo(LAST_NAME);
@@ -65,7 +65,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
     @Test
     public void whenUserDoesNotExistInTheDatabaseThenNoUserWillBeReturned() {
         CraftUser craftUser = getUser();
-        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser);
+        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
 
         assertThat(returnedCraftUser).isNull();
         validateConstraint(craftUser, 0);
@@ -97,7 +97,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         CraftUser craftUser = getUser();
         craftUserRepository.save(craftUser);
 
-        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser);
+        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
         returnedCraftUser.setFirstName(newName);
 
         CraftUser updatedCraftUser = craftUserRepository.updateUser(returnedCraftUser);
