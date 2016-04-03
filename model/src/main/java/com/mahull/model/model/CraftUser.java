@@ -1,6 +1,7 @@
 package com.mahull.model.model;
 
 import com.mahull.model.security.Role;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,13 +24,14 @@ public class CraftUser extends ModelObject {
     @Column(nullable = false)
     private String lastName;
     @NotNull
+    @Email
     @Column(nullable = false)
     private String userName;
     @NotNull
     @Column(nullable = false)
     private String password;
     @NotNull
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -71,5 +73,9 @@ public class CraftUser extends ModelObject {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isNew() {
+        return this.getId() == null ? true : false;
     }
 }

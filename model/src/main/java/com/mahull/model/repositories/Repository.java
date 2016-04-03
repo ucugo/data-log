@@ -5,6 +5,8 @@ import com.mahull.model.model.ModelObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Created by Ugo on 05/03/2016.
  */
@@ -17,7 +19,8 @@ public class Repository<T extends ModelObject>  {
         this.entityManager = entityManager;
     }
 
-    protected T get(Class<T> clazz, long id) {
+    protected T get(Class<T> clazz, Long id) {
+        requireNonNull(id);
         return entityManager.find(clazz, id);
     }
 

@@ -3,6 +3,8 @@ package com.mahull.admin.controllers;
 import com.mahull.model.model.CraftUser;
 import com.mahull.model.repositories.CraftUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,9 @@ public abstract class BaseController {
 
     @Autowired
     protected CraftUserRepository craftUserRepository;
+
+    @Autowired
+    protected PasswordEncoder passwordEncoder;
 
     protected CraftUser getCraftUser(HttpServletRequest request) {
 

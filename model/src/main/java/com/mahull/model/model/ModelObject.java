@@ -17,9 +17,9 @@ public class ModelObject implements Serializable {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 }

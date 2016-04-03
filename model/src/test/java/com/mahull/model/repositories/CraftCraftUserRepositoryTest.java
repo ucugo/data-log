@@ -35,7 +35,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     private static final String FIRST_NAME = "firstname";
     private static final String LAST_NAME = "lastname";
-    private static final String USER_NAME = "username@";
+    private static final String USER_NAME = "username@test.com";
     private static final String SOME_PASSWORD = "password";
     private static final Role User_ROLE = USER_ROLE;
     @Autowired
@@ -63,12 +63,11 @@ public class CraftCraftUserRepositoryTest extends TestCase {
     }
 
     @Test
-    public void whenUserDoesNotExistInTheDatabaseThenNoUserWillBeReturned() {
+    public void shouldThrowNullpointerExceptionWhenUserIdIsNull() {
         CraftUser craftUser = getUser();
-        CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
 
-        assertThat(returnedCraftUser).isNull();
-        validateConstraint(craftUser, 0);
+        Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
+        validateConstraint(craftUser, 1);
     }
 
     @Test

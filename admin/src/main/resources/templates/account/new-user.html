@@ -5,6 +5,7 @@
     <title>Births Register</title>
 </head>
 <body>
+<div th:fragment="info-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
 <td>
     <form action="#" th:action="@{/account/new-user}" th:object="${craftUser}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -13,5 +14,10 @@
         <div><input type="submit" value="Sign In"/></div>
     </form>
 </td>
+</div>
+
+<div th:fragment="info-success" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+    <p>Form successfully submitted</p>
+</div>
 </body>
 </html>

@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.mahull"})
-@EntityScan(basePackages = {"com/mahull/repositories", "com/mahull/model"})
+@EntityScan(basePackages = {"com/mahull/model"})
 public class JpaConfig {
 
     @Bean
