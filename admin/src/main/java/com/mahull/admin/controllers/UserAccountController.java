@@ -2,6 +2,7 @@ package com.mahull.admin.controllers;
 
 import com.mahull.model.model.CraftUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,14 @@ import javax.validation.Valid;
 @RequestMapping(value = "/account/*")
 public class UserAccountController extends BaseController {
 
-    @ModelAttribute("craftUser")
-    public CraftUser craftUser() {
-        return new CraftUser();
-    }
+//    @ModelAttribute("craftUser")
+//    public CraftUser craftUser() {
+//        return new CraftUser();
+//    }
 
     @RequestMapping(value = "new-user", method = RequestMethod.GET)
-    public String show() {
+    public String show(Model model) {
+        model.addAttribute("craftUser", new CraftUser());
         return "/account/new-user :: info-form";
     }
 

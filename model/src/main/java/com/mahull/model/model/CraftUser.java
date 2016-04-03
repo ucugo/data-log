@@ -1,5 +1,6 @@
 package com.mahull.model.model;
 
+import com.mahull.model.model.constraints.NonBlank;
 import com.mahull.model.security.Role;
 import org.hibernate.validator.constraints.Email;
 
@@ -18,18 +19,26 @@ public class CraftUser extends ModelObject {
     public static final String REQUEST_SCOPED_ATTRIBUTE_NAME = "craftUser";
 
     @NotNull
+    @NonBlank
     @Column(nullable = false)
     private String firstName;
+
     @NotNull
+    @NonBlank
     @Column(nullable = false)
     private String lastName;
+
     @NotNull
+    @NonBlank
     @Email
     @Column(nullable = false)
     private String userName;
+
     @NotNull
+    @NonBlank
     @Column(nullable = false)
     private String password;
+
     @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -75,6 +84,10 @@ public class CraftUser extends ModelObject {
         this.role = role;
     }
 
+    /**
+     *
+     * @return boolean.
+     */
     public boolean isNew() {
         return this.getId() == null ? true : false;
     }

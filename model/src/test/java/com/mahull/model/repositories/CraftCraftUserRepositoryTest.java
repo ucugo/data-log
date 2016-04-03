@@ -79,6 +79,16 @@ public class CraftCraftUserRepositoryTest extends TestCase {
     }
 
     @Test
+    public void shouldThrowExceptionWhenMandatoryFieldIsBlankDuringSaveOrUpdate() {
+        CraftUser craftUser = getUser();
+        craftUser.setFirstName(" ");
+
+        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
+        validateConstraint(craftUser, 1);
+    }
+
+
+    @Test
     public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
         craftUserRepository.save(getUser());
 

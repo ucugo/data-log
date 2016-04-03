@@ -5,15 +5,34 @@
     <title>Births Register</title>
 </head>
 <body>
+
 <div th:fragment="info-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
-<td>
     <form action="#" th:action="@{/account/new-user}" th:object="${craftUser}" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div><label> User Name : <input type="text" th:field="*{userName}"/> </label></div>
-        <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">username Error</td>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
-</td>
+    <table>
+        <tr>
+            <td><label> User Name : <input type="text" th:field="*{userName}"/> </label></td>
+            <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">username Error</td>
+        </tr>
+        <tr>
+            <td><label> FIrst Name : <input type="text" th:field="*{firstName}"/> </label></td>
+            <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">firstName Error</td>
+        </tr>
+        <tr>
+            <td><label> Last Name : <input type="text" th:field="*{lastName}"/> </label></td>
+            <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">lastName Error</td>
+        </tr>
+        <tr>
+            <td><label> Password : <input type="password" th:field="*{password}"/> </label></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="Sign In"/></td>
+            <td></td>
+        </tr>
+    </table>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+</form>
 </div>
 
 <div th:fragment="info-success" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
