@@ -17,14 +17,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "/account/*")
 public class UserAccountController extends BaseController {
 
-//    @ModelAttribute("craftUser")
-//    public CraftUser craftUser() {
-//        return new CraftUser();
-//    }
-
     @RequestMapping(value = "new-user", method = RequestMethod.GET)
     public String show(Model model) {
-        model.addAttribute("craftUser", new CraftUser());
+        CraftUser craftUser = new CraftUser();
+        craftUser.setLastName("");
+        model.addAttribute("craftUser", craftUser);
+
         return "/account/new-user :: info-form";
     }
 

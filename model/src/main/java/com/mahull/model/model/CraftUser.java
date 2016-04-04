@@ -18,23 +18,19 @@ public class CraftUser extends ModelObject {
 
     public static final String REQUEST_SCOPED_ATTRIBUTE_NAME = "craftUser";
 
-    @NotNull
     @NonBlank
     @Column(nullable = false)
     private String firstName;
 
-    @NotNull
     @NonBlank
     @Column(nullable = false)
     private String lastName;
 
-    @NotNull
     @NonBlank
     @Email
     @Column(nullable = false)
     private String userName;
 
-    @NotNull
     @NonBlank
     @Column(nullable = false)
     private String password;

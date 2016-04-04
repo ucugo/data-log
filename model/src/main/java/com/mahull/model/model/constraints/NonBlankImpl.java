@@ -15,7 +15,7 @@ public class NonBlankImpl implements ConstraintValidator<NonBlank, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        if (value.trim().length() == 0) {
+        if (value == null || value.trim().length() == 0) {
             return false;
         }
         return true;
