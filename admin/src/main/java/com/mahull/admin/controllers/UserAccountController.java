@@ -1,5 +1,6 @@
 package com.mahull.admin.controllers;
 
+import com.mahull.admin.util.Constants;
 import com.mahull.model.model.CraftUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 
+import static com.mahull.admin.util.Constants.ADD_NEW_USER_INFO_FORM;
+import static com.mahull.admin.util.Constants.ADD_NEW_USER_INFO_SUCCESS;
+
 /**
  * Created by Ugo on 30/03/2016.
  */
@@ -17,13 +21,17 @@ import javax.validation.Valid;
 @RequestMapping(value = "/account/*")
 public class UserAccountController extends BaseController {
 
+    /**
+     *
+     * @param model holds view object.
+     * @return returns view name.
+     */
     @RequestMapping(value = "new-user", method = RequestMethod.GET)
     public String show(Model model) {
-        CraftUser craftUser = new CraftUser();
-        craftUser.setLastName("");
-        model.addAttribute("craftUser", craftUser);
 
-        return "/account/new-user :: info-form";
+        CraftUser craftUser = new CraftUser();
+        model.addAttribute("craftUser", craftUser);
+        return ADD_NEW_USER_INFO_FORM;
     }
 
     /**
@@ -36,7 +44,7 @@ public class UserAccountController extends BaseController {
     public String addNewUser(@ModelAttribute("craftUser") @Valid CraftUser craftUser, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "/account/new-user :: info-form";
+            return ADD_NEW_USER_INFO_FORM;
         }
 
         final boolean isUserAlreadyExist = isUserNameAlreadyExist(craftUser.getUserName());
@@ -48,7 +56,7 @@ public class UserAccountController extends BaseController {
             craftUserRepository.updateUser(craftUser);
         }
 
-        return "/account/new-user :: info-success";
+        return ADD_NEW_USER_INFO_SUCCESS;
     }
 
     private boolean isUserNameAlreadyExist(String userName) {
