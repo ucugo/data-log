@@ -79,12 +79,4 @@ public class CraftUser extends ModelObject {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    /**
-     *
-     * @return boolean.
-     */
-    public boolean isNew() {
-        return this.getId() == null ? true : false;
-    }
 }

@@ -14,6 +14,7 @@ public class BaseControllerTest {
 
     @Test
     public void shouldReturnExistingCraftUserFromSession() {
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession().setAttribute(CraftUser.REQUEST_SCOPED_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION);
         CraftUser craftUser = new StubBaseController().getCraftUser(request);
@@ -23,13 +24,14 @@ public class BaseControllerTest {
 
     @Test
     public void shouldCreateANewCraftUser(){
+
         MockHttpServletRequest request = new MockHttpServletRequest();
         CraftUser craftUser = new StubBaseController().getCraftUser(request);
 
         assertThat(craftUser.isNew());
     }
 
-    private class StubBaseController extends BaseController {
+    private final class StubBaseController extends BaseController {
 
     }
 

@@ -19,6 +19,7 @@ import org.springframework.transaction.TransactionSystemException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
+import java.util.Date;
 import java.util.Set;
 
 import static com.mahull.model.security.Role.*;
@@ -59,6 +60,8 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         assertThat(returnedCraftUser.getUserName()).isEqualTo(USER_NAME);
         assertThat(returnedCraftUser.getPassword()).isEqualTo(SOME_PASSWORD);
         assertThat(returnedCraftUser.getRole()).isEqualTo(User_ROLE);
+        assertThat(returnedCraftUser.getCreatedAt()).isNotNull();
+        assertThat(returnedCraftUser.getUpdatedAt()).isNotNull();
         validateConstraint(craftUser, 0);
     }
 
@@ -67,7 +70,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         CraftUser craftUser = getUser();
 
         Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
-        validateConstraint(craftUser, 1);
+        validateConstraint(craftUser, 0);
     }
 
     @Test
@@ -87,7 +90,6 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         validateConstraint(craftUser, 1);
     }
 
-
     @Test
     public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
         craftUserRepository.save(getUser());
@@ -96,6 +98,22 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         assertThat(returnedCraftUser).isNotNull();
         assertThat(returnedCraftUser.getUserName()).isEqualTo(USER_NAME);
+    }
+
+    @Test
+    public void shouldReturnTrueForIsNewWhenUserIdIsNull() {
+        CraftUser craftUser = getUser();
+
+        assertThat(craftUser.isNew()).isTrue();
+    }
+
+    @Test
+    public void shouldReturnAValidUserWhenCalledToGetWithId() {
+        CraftUser craftUser = getUser();
+
+        craftUserRepository.save(craftUser);
+
+        assertThat(craftUserRepository.getWithId(craftUser.getId())).isNotNull();
     }
 
     @Test
@@ -123,6 +141,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         craftUser.setUserName(USER_NAME);
         craftUser.setPassword(SOME_PASSWORD);
         craftUser.setRole(User_ROLE);
+        craftUser.setUpdatedAt(new Date());
         return craftUser;
     }
 }
