@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
  * Created by Ugo on 05/03/2016.
  */
 @Component
-public class PropertiesAccessor {
+public class PropertyFetcher {
 
     private final Environment environment;
 
     @Autowired
-    public PropertiesAccessor(Environment environment) {
+    public PropertyFetcher(Environment environment) {
         this.environment = environment;
     }
 

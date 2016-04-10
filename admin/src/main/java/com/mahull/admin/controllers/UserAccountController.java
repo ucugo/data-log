@@ -60,6 +60,6 @@ public class UserAccountController extends BaseController {
     }
 
     private boolean isUserNameAlreadyExist(String userName) {
-        return craftUserRepository.getWithUserName(userName) == null ? false : true;
+        return craftUserRepository.getWithUserName(userName) != null;
     }
 }
