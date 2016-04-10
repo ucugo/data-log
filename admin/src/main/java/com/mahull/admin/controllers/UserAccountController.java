@@ -1,7 +1,6 @@
 package com.mahull.admin.controllers;
 
-import com.mahull.admin.util.Constants;
-import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.profile.CraftUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
