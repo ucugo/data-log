@@ -1,6 +1,6 @@
 package com.mahull.model.repositories;
 
-import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.profile.CraftUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;

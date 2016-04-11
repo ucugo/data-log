@@ -1,6 +1,6 @@
 package com.mahull.admin.security;
 
-import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.profile.CraftUser;
 import com.mahull.model.repositories.CraftUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

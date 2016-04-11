@@ -1,6 +1,6 @@
 package com.mahull.admin.controllers;
 
-import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.profile.CraftUser;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestAttributes;

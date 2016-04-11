@@ -1,6 +1,6 @@
 package com.mahull.admin.interceptor;
 
-import com.mahull.model.model.CraftUser;
+import com.mahull.model.model.profile.CraftUser;
 import com.mahull.model.repositories.CraftUserRepository;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,8 +1,7 @@
 package com.mahull.model.repositories;
 
 import com.mahull.model.config.JpaConfigTest;
-import com.mahull.model.model.CraftUser;
-import com.mahull.model.model.ModelObject;
+import com.mahull.model.model.profile.CraftUser;
 import com.mahull.model.security.Role;
 import com.mahull.model.util.TestCase;
 import org.assertj.core.api.Assertions;
@@ -16,11 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionSystemException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import java.util.Date;
-import java.util.Set;
 
 import static com.mahull.model.security.Role.*;
 import static org.assertj.core.api.Assertions.assertThat;
