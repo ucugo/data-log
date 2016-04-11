@@ -20,6 +20,11 @@ public enum InventoryType {
         return label;
     }
 
+    /**
+     *
+     * @param label Stringvalue.
+     * @return InventoryTYpe object.
+     */
     public static InventoryType fromLabel(String label) {
         return asList(InventoryType.values())
                 .stream()

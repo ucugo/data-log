@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static java.lang.String.format;
 
 /**
- * Higher priority Items will be displayed by default
+ * Higher priority Items will be displayed by default.
  */
 public enum SortingPriority {
 
@@ -25,6 +25,11 @@ public enum SortingPriority {
         return priority;
     }
 
+    /**
+     *
+     * @param priority String value.
+     * @return SortingPriorityObject.
+     */
     public static SortingPriority fromLabel(String priority) {
         return Arrays.asList(SortingPriority.values())
                 .stream()
