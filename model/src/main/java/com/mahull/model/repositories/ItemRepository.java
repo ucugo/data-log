@@ -35,11 +35,11 @@ public class ItemRepository extends Repository<Item> {
     public List<Item> getItemsWithCraftUserId(long craftUserId) {
         return getEntityManager()
                 .createQuery(FIND_ITEM_WITH_CRAFT_USER_ID, Item.class)
-                .setParameter("craftUser_id", craftUserId)
+                .setParameter("craftUserId", craftUserId)
                 .getResultList();
     }
 
-    public void saveItem(Item item) {
+    public void saveItem(Item item) throws Exception {
         requireNonNull(item);
         getEntityManager().persist(item);
     }
@@ -53,8 +53,8 @@ public class ItemRepository extends Repository<Item> {
     public List<Item> getItemWithCraftUserIdAndCategoryId(long craftUserId, long categoryId) {
         return getEntityManager()
                 .createQuery(FIND_ITEM_WITH_CRAFT_USER_AND_CATEGORY, Item.class)
-                .setParameter("craftUser_id", craftUserId)
-                .setParameter("category_id", categoryId)
+                .setParameter("craftUserId", craftUserId)
+                .setParameter("categoryId", categoryId)
                 .getResultList();
     }
 
@@ -81,6 +81,36 @@ public class ItemRepository extends Repository<Item> {
                 .createQuery(UserQuery.FIND_ITEMS_WITH_PURCHASED_DATE_AND_CRAFT_USER_ID, Item.class)
                 .setParameter("craftUserId", craftUserId)
                 .setParameter("purchasedDate", purchasedDate)
+                .getResultList();
+    }
+
+    /**
+     *
+     * @param startDAte .
+     * @param endDate .
+     * @return .
+     */
+    public List<Item> getItemsPurchasedInGivenPeriod(Date startDAte, Date endDate) {
+        return getEntityManager()
+                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD)
+                .setParameter("startDate", startDAte)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    /**
+     *
+     * @param startDAte .
+     * @param endDate .
+     * @param craftUserId .
+     * @return .
+     */
+    public List<Item> getItemsPurchasedInGivenPeriodWithUserId(Date startDAte, Date endDate, Long craftUserId) {
+        return getEntityManager()
+                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD_FOR_A_USER)
+                .setParameter("startDate", startDAte)
+                .setParameter("endDate", endDate)
+                .setParameter("craftUserId", craftUserId)
                 .getResultList();
     }
 }

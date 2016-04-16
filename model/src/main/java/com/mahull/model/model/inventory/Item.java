@@ -44,14 +44,14 @@ public class Item extends ModelObject {
     private InventoryType inventoryType;
 
     @NonBlank
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull
     private double purchasePricePerUnit;
 
     @NotNull
-    private double defaultSeelingPrice;
+    private double defaultSellingPrice;
 
     public CraftUser getCraftUser() {
         return craftUser;
@@ -109,12 +109,12 @@ public class Item extends ModelObject {
         this.purchasePricePerUnit = purchasePricePerUnit;
     }
 
-    public double getDefaultSeelingPrice() {
-        return defaultSeelingPrice;
+    public double getDefaultSellingPrice() {
+        return defaultSellingPrice;
     }
 
-    public void setDefaultSeelingPrice(double defaultSeelingPrice) {
-        this.defaultSeelingPrice = defaultSeelingPrice;
+    public void setDefaultSellingPrice(double defaultSellingPrice) {
+        this.defaultSellingPrice = defaultSellingPrice;
     }
 
     public long getQuantity() {

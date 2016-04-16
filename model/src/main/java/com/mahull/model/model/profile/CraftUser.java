@@ -33,7 +33,7 @@ public class CraftUser extends ModelObject {
 
     @NonBlank
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userName;
 
     @NonBlank

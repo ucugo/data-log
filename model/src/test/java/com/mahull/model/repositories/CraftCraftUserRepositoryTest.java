@@ -20,13 +20,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @UnitTestsAnnotations
 public class CraftCraftUserRepositoryTest extends TestCase {
 
-
-    @Autowired
-    private CraftUserRepository craftUserRepository;
-
     @Test
     public void whenNewUserIsAddedThenItShouldBeStoredInTheDatabase() {
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         craftUserRepository.save(craftUser);
 
@@ -44,7 +40,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldThrowNullpointerExceptionWhenUserIdIsNull() {
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
         validateConstraint(craftUser, 0);
@@ -60,7 +56,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldThrowExceptionWhenMandatoryFieldIsBlankDuringSaveOrUpdate() {
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
         craftUser.setFirstName(" ");
 
         Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
@@ -69,7 +65,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
-        craftUserRepository.save(dummyUser());
+        craftUserRepository.save(dummyUser(USER_NAME));
 
         CraftUser returnedCraftUser = craftUserRepository.getWithUserName(USER_NAME);
 
@@ -79,14 +75,14 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldReturnTrueForIsNewWhenUserIdIsNull() {
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         assertThat(craftUser.isNew()).isTrue();
     }
 
     @Test
     public void shouldReturnAValidUserWhenCalledToGetWithId() {
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         craftUserRepository.save(craftUser);
 
@@ -98,7 +94,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         final String newName = "new_name";
 
-        CraftUser craftUser = dummyUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
         craftUserRepository.save(craftUser);
 
         CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());

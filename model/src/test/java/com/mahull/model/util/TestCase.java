@@ -2,7 +2,11 @@ package com.mahull.model.util;
 
 import com.mahull.model.model.ModelObject;
 import com.mahull.model.model.profile.CraftUser;
+import com.mahull.model.repositories.CategoryRepository;
+import com.mahull.model.repositories.CraftUserRepository;
+import com.mahull.model.repositories.ItemRepository;
 import com.mahull.model.security.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -21,11 +25,18 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class TestCase {
 
+    protected static final String USER_NAME = "username@test.com";
     protected static final String FIRST_NAME = "firstname";
     protected static final String LAST_NAME = "lastname";
-    protected static final String USER_NAME = "username@test.com";
     protected static final String SOME_PASSWORD = "password";
     protected static final Role User_ROLE = USER_ROLE;
+
+    @Autowired
+    protected ItemRepository itemRepository;
+    @Autowired
+    protected CraftUserRepository craftUserRepository;
+    @Autowired
+    protected CategoryRepository categoryRepository;
 
     protected void validateConstraint(ModelObject modelObject, int violationSize) {
 
@@ -44,11 +55,11 @@ public class TestCase {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    protected CraftUser dummyUser() {
+    protected CraftUser dummyUser(String userName) {
         CraftUser craftUser = new CraftUser();
         craftUser.setFirstName(FIRST_NAME);
         craftUser.setLastName(LAST_NAME);
-        craftUser.setUserName(USER_NAME);
+        craftUser.setUserName(userName);
         craftUser.setPassword(SOME_PASSWORD);
         craftUser.setRole(User_ROLE);
         craftUser.setUpdatedAt(new Date());
