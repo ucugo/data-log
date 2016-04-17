@@ -9,7 +9,6 @@ import com.mahull.model.util.UnitTestsAnnotations;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -22,19 +21,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @UnitTestsAnnotations
-@Transactional
 public class ItemRepositoryTest extends TestCase {
 
-    private static final String CATEGORY_NAME = "category_name";
-
     @Test
-    public void whenNewIteIsAddedThenItShouldBeStoredInTheDatabase() throws Exception{
+    public void whenNewIteIsAddedThenItShouldBeStoredInTheDatabase() {
         final CraftUser craftUser = getCraftUser(USER_NAME);
         assertThat(addValidItemToDatabase(craftUser, getCategory(CATEGORY_NAME, craftUser), "item_name", new Date())).isNotNull();
     }
 
     @Test
-    public void items_purchased_in_a_given_period() throws Exception{
+    public void items_purchased_in_a_given_period() {
 
         final CraftUser craftUser = getCraftUser(USER_NAME);
         final Category category = getCategory(CATEGORY_NAME, craftUser);
@@ -50,7 +46,7 @@ public class ItemRepositoryTest extends TestCase {
     }
 
     @Test
-    public void items_purchased_in_a_given_period_for_a_craft_user() throws Exception{
+    public void items_purchased_in_a_given_period_for_a_craft_user() {
 
         final CraftUser craftUser = getCraftUser(USER_NAME);
         final Category category = getCategory(CATEGORY_NAME, craftUser);
@@ -68,7 +64,7 @@ public class ItemRepositoryTest extends TestCase {
 
 
     @Test
-    public void items_are_returned_based_on_purchased_date_and_craftUser_id() throws Exception {
+    public void items_are_returned_based_on_purchased_date_and_craftUser_id() {
 
         final String firstDate = "2000-01-01 12:30";
         final String secondDate = "2000-02-01 12:00";
@@ -91,7 +87,7 @@ public class ItemRepositoryTest extends TestCase {
     }
 
     @Test
-    public void items_are_returned_based_on_purchased_date() throws Exception {
+    public void items_are_returned_based_on_purchased_date() {
 
         final String firstDate = "2000-01-01 19:30";
         final String secondDate = "2000-01-01 12:30";
@@ -105,11 +101,11 @@ public class ItemRepositoryTest extends TestCase {
         List<Item> items = itemRepository.findItemsWithPurchaseDates(customDate(secondDate));
 
         assertThat(items.size()).isEqualTo(2);
-        assertThat(items).extractingResultOf("getPurchasedDate").contains(customDate(firstDate),customDate(secondDate));
+        assertThat(items).extractingResultOf("getPurchasedDate").contains(customDate(firstDate), customDate(secondDate));
     }
 
     @Test
-    public void items_are_returned_for_a_craft_user_when_craft_user_id_and_category_id_is_passed() throws Exception {
+    public void items_are_returned_for_a_craft_user_when_craft_user_id_and_category_id_is_passed() {
 
         final CraftUser craftUser1 = getCraftUser(USER_NAME);
         Item firstItem = addValidItemToDatabase(craftUser1, getCategory(CATEGORY_NAME, craftUser1), "item_name1", new Date());
@@ -126,7 +122,7 @@ public class ItemRepositoryTest extends TestCase {
     }
 
     @Test
-    public void items_are_returned_for_a_craft_user_when_craft_user_id_is_passed() throws Exception {
+    public void items_are_returned_for_a_craft_user_when_craft_user_id_is_passed() {
 
         final CraftUser craftUser = getCraftUser(USER_NAME);
         Item item = addValidItemToDatabase(craftUser, getCategory(CATEGORY_NAME, craftUser), "item_name", new Date());
@@ -134,7 +130,7 @@ public class ItemRepositoryTest extends TestCase {
         assertThat(items.size()).isEqualTo(1);
     }
 
-    private Item addValidItemToDatabase(CraftUser craftUser, Category category, String itemName, Date purchasedDate) throws Exception{
+    private Item addValidItemToDatabase(CraftUser craftUser, Category category, String itemName, Date purchasedDate) {
 
         Item item = dummyItem(itemName, purchasedDate);
         item.setCraftUser(craftUser);
@@ -142,22 +138,8 @@ public class ItemRepositoryTest extends TestCase {
 
         validateConstraint(item, 0);
 
-        itemRepository.saveItem(item);
+        itemRepository.save(item);
         return itemRepository.get(Item.class, item.getId());
-    }
-
-    private Category getCategory(String categoryName, CraftUser craftUser) {
-        Category category = new Category();
-        category.setName(categoryName);
-        category.setCraftUser(craftUser);
-        categoryRepository.save(category);
-        return category;
-    }
-
-    private CraftUser getCraftUser(String userName) {
-        CraftUser craftUser = dummyUser(userName);
-        craftUserRepository.save(craftUser);
-        return craftUser;
     }
 
     private Item dummyItem(String itemName, Date purchasedDate) {

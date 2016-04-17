@@ -39,11 +39,6 @@ public class ItemRepository extends Repository<Item> {
                 .getResultList();
     }
 
-    public void saveItem(Item item) throws Exception {
-        requireNonNull(item);
-        getEntityManager().persist(item);
-    }
-
     /**
      *
      * @param craftUserId .

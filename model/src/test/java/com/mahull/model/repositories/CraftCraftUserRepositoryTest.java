@@ -6,9 +6,7 @@ import com.mahull.model.util.UnitTestsAnnotations;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,23 +42,6 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
         validateConstraint(craftUser, 0);
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenMandatoryFieldIsNotSetDuringSaveOrUpdate() {
-        CraftUser craftUser = new CraftUser();
-
-        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
-        validateConstraint(craftUser, 5);
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenMandatoryFieldIsBlankDuringSaveOrUpdate() {
-        CraftUser craftUser = dummyUser(USER_NAME);
-        craftUser.setFirstName(" ");
-
-        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
-        validateConstraint(craftUser, 1);
     }
 
     @Test

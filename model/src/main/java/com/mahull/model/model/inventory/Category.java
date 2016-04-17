@@ -29,7 +29,7 @@ public class Category extends ModelObject {
     private CraftUser craftUser;
 
     @NonBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)

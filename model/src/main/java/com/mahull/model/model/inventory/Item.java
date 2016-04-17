@@ -44,7 +44,7 @@ public class Item extends ModelObject {
     private InventoryType inventoryType;
 
     @NonBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @NotNull

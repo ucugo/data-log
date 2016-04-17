@@ -1,6 +1,7 @@
 package com.mahull.model.util;
 
 import com.mahull.model.model.ModelObject;
+import com.mahull.model.model.inventory.Category;
 import com.mahull.model.model.profile.CraftUser;
 import com.mahull.model.repositories.CategoryRepository;
 import com.mahull.model.repositories.CraftUserRepository;
@@ -30,6 +31,7 @@ public class TestCase {
     protected static final String LAST_NAME = "lastname";
     protected static final String SOME_PASSWORD = "password";
     protected static final Role User_ROLE = USER_ROLE;
+    protected static final String CATEGORY_NAME = "category_name";
 
     @Autowired
     protected ItemRepository itemRepository;
@@ -63,6 +65,20 @@ public class TestCase {
         craftUser.setPassword(SOME_PASSWORD);
         craftUser.setRole(User_ROLE);
         craftUser.setUpdatedAt(new Date());
+        return craftUser;
+    }
+
+    protected Category getCategory(String categoryName, CraftUser craftUser) {
+        Category category = new Category();
+        category.setName(categoryName);
+        category.setCraftUser(craftUser);
+        categoryRepository.save(category);
+        return category;
+    }
+
+    protected CraftUser getCraftUser(String userName) {
+        CraftUser craftUser = dummyUser(userName);
+        craftUserRepository.save(craftUser);
         return craftUser;
     }
 }
