@@ -7,6 +7,8 @@ import javax.persistence.Column;
 
 /**
  * Created by Ugo on 10/04/2016.
+ * this is mainly for internal use and should not be displayed in any document.
+ * Example Shoe color, Sizes
  */
 public class Attributes extends ModelObject {
 

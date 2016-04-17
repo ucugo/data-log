@@ -2,28 +2,35 @@ package com.mahull.model.model.inventory;
 
 import com.mahull.model.model.ModelObject;
 import com.mahull.model.model.constraints.NonBlank;
+import com.mahull.model.model.profile.CraftUser;
 
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Ugo on 10/04/2016.
- * this is mainly for internal use and should not be displayed in any document.
- * Example Shoe color, Sizes
+ *
  */
 @Entity
 public class Category extends ModelObject {
 
-    @NonBlank
-    @Column(nullable = false)
-    private String name;
     private String description;
     private double defaultPriceMarkup;
     private String customField;
+
+    @NotNull
+    @ManyToOne(targetEntity = CraftUser.class)
+    private CraftUser craftUser;
+
+    @NonBlank
+    @Column(nullable = false, unique = true)
+    private String name;
 
     @Enumerated(EnumType.STRING)
     private InventoryType inventoryType;
@@ -77,5 +84,13 @@ public class Category extends ModelObject {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public CraftUser getCraftUser() {
+        return craftUser;
+    }
+
+    public void setCraftUser(CraftUser craftUser) {
+        this.craftUser = craftUser;
     }
 }

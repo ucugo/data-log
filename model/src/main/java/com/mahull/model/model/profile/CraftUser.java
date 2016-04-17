@@ -2,6 +2,7 @@ package com.mahull.model.model.profile;
 
 import com.mahull.model.model.ModelObject;
 import com.mahull.model.model.constraints.NonBlank;
+import com.mahull.model.model.inventory.Category;
 import com.mahull.model.model.inventory.Item;
 import com.mahull.model.security.Role;
 import org.hibernate.validator.constraints.Email;
@@ -47,6 +48,9 @@ public class CraftUser extends ModelObject {
 
     @OneToMany(mappedBy = "craftUser", targetEntity = Item.class)
     private List<Item> items;
+
+    @OneToMany(mappedBy = "craftUser", targetEntity = Category.class)
+    private List<Category> categories;
 
     public String getFirstName() {
         return firstName;
@@ -94,5 +98,13 @@ public class CraftUser extends ModelObject {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
