@@ -2,10 +2,8 @@ package com.mahull.model.repositories;
 
 import com.mahull.model.model.profile.CraftUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
 import javax.persistence.EntityManager;
 
 import static com.mahull.model.query.UserQuery.FIND_USER_WITH_USERNAME;
@@ -20,11 +18,6 @@ public class CraftUserRepository extends Repository<CraftUser> {
     @Autowired
     public CraftUserRepository(EntityManager entityManager) {
         super(entityManager);
-    }
-
-    public void save(CraftUser craftUser) throws TransactionSystemException {
-        Objects.requireNonNull(craftUser);
-        getEntityManager().persist(craftUser);
     }
 
     public CraftUser getWithUserName(String userName) {

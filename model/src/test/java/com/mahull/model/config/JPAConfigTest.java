@@ -7,7 +7,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 @EnableAutoConfiguration
-public class JpaConfigTest extends JpaConfig {
+public class JpaConfigTest {
 
     @Bean
     public EmbeddedDatabase dataSource(){

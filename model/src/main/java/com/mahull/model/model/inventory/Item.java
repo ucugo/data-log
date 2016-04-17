@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Ugo on 10/04/2016.
@@ -20,30 +21,37 @@ import javax.persistence.TemporalType;
 @Entity
 public class Item extends ModelObject {
 
+    private String description;
+    private long quantity;
+    private boolean lowInventoryReminder;
+    private SortingPriority sortingPriority;
+
     @ManyToOne(optional = false)
+    @NotNull
     private CraftUser craftUser;
 
     @ManyToOne(optional = false)
+    @NotNull
     private Category category;
 
-    @NonBlank
+    @NotNull
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date purchasedDate;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private InventoryType inventoryType;
 
     @NonBlank
     @Column(nullable = false)
     private String name;
-    private String description;
-    private double purchasePricePerUnit;
-    private double defaultSeelingPrice;
-    private long quantity;
-    private boolean lowInventoryReminder;
-    private SortingPriority sortingPriority;
 
+    @NotNull
+    private double purchasePricePerUnit;
+
+    @NotNull
+    private double defaultSellingPrice;
 
     public CraftUser getCraftUser() {
         return craftUser;
@@ -101,12 +109,12 @@ public class Item extends ModelObject {
         this.purchasePricePerUnit = purchasePricePerUnit;
     }
 
-    public double getDefaultSeelingPrice() {
-        return defaultSeelingPrice;
+    public double getDefaultSellingPrice() {
+        return defaultSellingPrice;
     }
 
-    public void setDefaultSeelingPrice(double defaultSeelingPrice) {
-        this.defaultSeelingPrice = defaultSeelingPrice;
+    public void setDefaultSellingPrice(double defaultSellingPrice) {
+        this.defaultSellingPrice = defaultSellingPrice;
     }
 
     public long getQuantity() {

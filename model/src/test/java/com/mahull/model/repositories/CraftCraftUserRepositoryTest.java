@@ -1,50 +1,26 @@
 package com.mahull.model.repositories;
 
-import com.mahull.model.config.JpaConfigTest;
 import com.mahull.model.model.profile.CraftUser;
-import com.mahull.model.security.Role;
 import com.mahull.model.util.TestCase;
+import com.mahull.model.util.UnitTestsAnnotations;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.TransactionSystemException;
 
-import java.util.Date;
-
-import static com.mahull.model.security.Role.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Ugo on 05/03/2016.
  */
-@ContextConfiguration(classes = JpaConfigTest.class)
-@TestPropertySource(locations = {"/application-test.properties"})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
 @RunWith(SpringJUnit4ClassRunner.class)
+@UnitTestsAnnotations
 public class CraftCraftUserRepositoryTest extends TestCase {
-
-    private static final String FIRST_NAME = "firstname";
-    private static final String LAST_NAME = "lastname";
-    private static final String USER_NAME = "username@test.com";
-    private static final String SOME_PASSWORD = "password";
-    private static final Role User_ROLE = USER_ROLE;
-    @Autowired
-    private CraftUserRepository craftUserRepository;
-
-    @Before
-    public void setUp() {
-
-    }
 
     @Test
     public void whenNewUserIsAddedThenItShouldBeStoredInTheDatabase() {
-        CraftUser craftUser = getUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         craftUserRepository.save(craftUser);
 
@@ -62,32 +38,15 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldThrowNullpointerExceptionWhenUserIdIsNull() {
-        CraftUser craftUser = getUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
         validateConstraint(craftUser, 0);
     }
 
     @Test
-    public void shouldThrowExceptionWhenMandatoryFieldIsNotSetDuringSaveOrUpdate() {
-        CraftUser craftUser = new CraftUser();
-
-        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
-        validateConstraint(craftUser, 5);
-    }
-
-    @Test
-    public void shouldThrowExceptionWhenMandatoryFieldIsBlankDuringSaveOrUpdate() {
-        CraftUser craftUser = getUser();
-        craftUser.setFirstName(" ");
-
-        Assertions.assertThatExceptionOfType(TransactionSystemException.class).isThrownBy(() -> craftUserRepository.save(craftUser));
-        validateConstraint(craftUser, 1);
-    }
-
-    @Test
     public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
-        craftUserRepository.save(getUser());
+        craftUserRepository.save(dummyUser(USER_NAME));
 
         CraftUser returnedCraftUser = craftUserRepository.getWithUserName(USER_NAME);
 
@@ -97,14 +56,14 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldReturnTrueForIsNewWhenUserIdIsNull() {
-        CraftUser craftUser = getUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         assertThat(craftUser.isNew()).isTrue();
     }
 
     @Test
     public void shouldReturnAValidUserWhenCalledToGetWithId() {
-        CraftUser craftUser = getUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
 
         craftUserRepository.save(craftUser);
 
@@ -116,7 +75,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         final String newName = "new_name";
 
-        CraftUser craftUser = getUser();
+        CraftUser craftUser = dummyUser(USER_NAME);
         craftUserRepository.save(craftUser);
 
         CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
@@ -127,16 +86,5 @@ public class CraftCraftUserRepositoryTest extends TestCase {
         assertThat(updatedCraftUser.getId()).isEqualTo(returnedCraftUser.getId());
         assertThat(updatedCraftUser.getFirstName()).isEqualTo(newName);
         validateConstraint(updatedCraftUser, 0);
-    }
-
-    private CraftUser getUser() {
-        CraftUser craftUser = new CraftUser();
-        craftUser.setFirstName(FIRST_NAME);
-        craftUser.setLastName(LAST_NAME);
-        craftUser.setUserName(USER_NAME);
-        craftUser.setPassword(SOME_PASSWORD);
-        craftUser.setRole(User_ROLE);
-        craftUser.setUpdatedAt(new Date());
-        return craftUser;
     }
 }

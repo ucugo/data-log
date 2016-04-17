@@ -24,6 +24,21 @@ public class Repository<T extends ModelObject>  {
         return entityManager.find(clazz, id);
     }
 
+    /**
+     *
+     * @param entity .
+     */
+    public void save(T entity) {
+        requireNonNull(entity);
+
+        if (entity.isNew()) {
+            entityManager.persist(entity);
+        } else {
+            entityManager.merge(entity);
+        }
+
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }
