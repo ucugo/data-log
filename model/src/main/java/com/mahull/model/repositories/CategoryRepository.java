@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import javax.persistence.EntityManager;
 
+import static com.mahull.model.query.UserQuery.FIND_CATEGORIES_WITH_CRAFT_USER_ID;
+import static com.mahull.model.query.UserQuery.FIND_CATEGORIES_WITH_CRAFT_USER_ID_AND_CATEGORY_NAME;
+
 /**
  * Created by Ugo on 13/04/2016.
  */
@@ -28,8 +31,16 @@ public class CategoryRepository extends Repository {
      */
     public List<Category> getWithCraftUserId(Long craftUserId) {
         return getEntityManager()
-                .createQuery(UserQuery.FIND_CATEGORIES_WITH_CRAFT_USER_ID, Category.class)
+                .createQuery(FIND_CATEGORIES_WITH_CRAFT_USER_ID, Category.class)
                 .setParameter("craftUserId", craftUserId)
                 .getResultList();
+    }
+
+    public Category getWithCraftUserIdAndCategoryName(Long craftUserId, String categoryName) {
+        return getEntityManager()
+                .createQuery(FIND_CATEGORIES_WITH_CRAFT_USER_ID_AND_CATEGORY_NAME, Category.class)
+                .setParameter("craftUserId", craftUserId)
+                .setParameter("categoryName", categoryName)
+                .getSingleResult();
     }
 }
