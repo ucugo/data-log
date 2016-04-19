@@ -20,9 +20,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void whenNewUserIsAddedThenItShouldBeStoredInTheDatabase() {
-        CraftUser craftUser = dummyUser(USER_NAME);
-
-        craftUserRepository.save(craftUser);
+        CraftUser craftUser = getCraftUser(USER_NAME);
 
         CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
         assertThat(returnedCraftUser).isNotNull();
@@ -38,16 +36,16 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldThrowNullpointerExceptionWhenUserIdIsNull() {
-        CraftUser craftUser = dummyUser(USER_NAME);
+        CraftUser craftUser = new CraftUser();
 
         Assertions.assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> craftUserRepository.get(CraftUser.class, null));
-        validateConstraint(craftUser, 0);
+        validateConstraint(craftUser, 5);
     }
 
     @Test
     public void whenAskedToFindUserWithUserNameShouldReturnAUser() {
-        craftUserRepository.save(dummyUser(USER_NAME));
 
+        getCraftUser(USER_NAME);
         CraftUser returnedCraftUser = craftUserRepository.getWithUserName(USER_NAME);
 
         assertThat(returnedCraftUser).isNotNull();
@@ -56,16 +54,14 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
     @Test
     public void shouldReturnTrueForIsNewWhenUserIdIsNull() {
-        CraftUser craftUser = dummyUser(USER_NAME);
+        CraftUser craftUser = new CraftUser();
 
         assertThat(craftUser.isNew()).isTrue();
     }
 
     @Test
     public void shouldReturnAValidUserWhenCalledToGetWithId() {
-        CraftUser craftUser = dummyUser(USER_NAME);
-
-        craftUserRepository.save(craftUser);
+        CraftUser craftUser = getCraftUser(USER_NAME);
 
         assertThat(craftUserRepository.getWithId(craftUser.getId())).isNotNull();
     }
@@ -75,8 +71,7 @@ public class CraftCraftUserRepositoryTest extends TestCase {
 
         final String newName = "new_name";
 
-        CraftUser craftUser = dummyUser(USER_NAME);
-        craftUserRepository.save(craftUser);
+        CraftUser craftUser = getCraftUser(USER_NAME);
 
         CraftUser returnedCraftUser = craftUserRepository.get(CraftUser.class, craftUser.getId());
         returnedCraftUser.setFirstName(newName);

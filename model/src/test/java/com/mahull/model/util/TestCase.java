@@ -3,6 +3,7 @@ package com.mahull.model.util;
 import com.mahull.model.model.ModelObject;
 import com.mahull.model.model.inventory.Category;
 import com.mahull.model.model.profile.CraftUser;
+import com.mahull.model.repositories.AttributeRepository;
 import com.mahull.model.repositories.CategoryRepository;
 import com.mahull.model.repositories.CraftUserRepository;
 import com.mahull.model.repositories.ItemRepository;
@@ -39,6 +40,8 @@ public class TestCase {
     protected CraftUserRepository craftUserRepository;
     @Autowired
     protected CategoryRepository categoryRepository;
+    @Autowired
+    protected AttributeRepository attributeRepository;
 
     protected void validateConstraint(ModelObject modelObject, int violationSize) {
 
@@ -57,7 +60,7 @@ public class TestCase {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    protected CraftUser dummyUser(String userName) {
+    private CraftUser dummyUser(String userName) {
         CraftUser craftUser = new CraftUser();
         craftUser.setFirstName(FIRST_NAME);
         craftUser.setLastName(LAST_NAME);

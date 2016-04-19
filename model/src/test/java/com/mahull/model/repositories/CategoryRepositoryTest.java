@@ -50,4 +50,17 @@ public class CategoryRepositoryTest extends TestCase {
         assertThat(categories.get(0).getCraftUser().getId()).isEqualTo(craftUser.getId());
         assertThat(categories.get(0).getName()).isEqualTo("new_name");
     }
+
+    @Test
+    public void get_categories_with_for_craft_user_with_category_name() {
+
+        CraftUser craftUser = getCraftUser(USER_NAME);
+        Category category = getCategory(CATEGORY_NAME, craftUser);
+        Category category2 = getCategory("new_category", craftUser);
+
+        Category fromDatabase = categoryRepository.getWithCraftUserIdAndCategoryName(craftUser.getId(), CATEGORY_NAME);
+
+        assertThat(fromDatabase.getName()).isEqualTo(category.getName());
+        assertThat(fromDatabase.getName()).isNotEqualTo(category2.getName());
+    }
 }

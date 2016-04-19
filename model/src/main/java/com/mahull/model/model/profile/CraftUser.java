@@ -2,6 +2,7 @@ package com.mahull.model.model.profile;
 
 import com.mahull.model.model.ModelObject;
 import com.mahull.model.model.constraints.NonBlank;
+import com.mahull.model.model.inventory.Attribute;
 import com.mahull.model.model.inventory.Category;
 import com.mahull.model.model.inventory.Item;
 import com.mahull.model.security.Role;
@@ -51,6 +52,9 @@ public class CraftUser extends ModelObject {
 
     @OneToMany(mappedBy = "craftUser", targetEntity = Category.class)
     private List<Category> categories;
+
+    @OneToMany(mappedBy = "craftUser", targetEntity = Attribute.class)
+    private List<Attribute> attributes;
 
     public String getFirstName() {
         return firstName;
@@ -106,5 +110,13 @@ public class CraftUser extends ModelObject {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
     }
 }

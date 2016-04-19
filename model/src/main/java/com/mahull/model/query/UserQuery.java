@@ -22,4 +22,7 @@ public interface UserQuery {
     String FIND_ITEMS_PURCHASED_WITHIN_PERIOD_FOR_A_USER =
             "From Item as i where i.craftUser.id = :craftUserId AND i.purchasedDate BETWEEN :startDate AND :endDate";
     String FIND_CATEGORIES_WITH_CRAFT_USER_ID = "From Category as c WHERE c.craftUser.id = :craftUserId";
+    String FIND_CATEGORIES_WITH_CRAFT_USER_ID_AND_CATEGORY_NAME =
+            "From Category as c WHERE c.craftUser.id = :craftUserId AND name = :categoryName";
+    String FIND_ATTRIBUTES_WITH_USER_ID = "From Attribute a WHERE a.craftUser.id = :craftUserId";
 }
