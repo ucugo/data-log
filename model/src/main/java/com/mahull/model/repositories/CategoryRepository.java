@@ -36,6 +36,12 @@ public class CategoryRepository extends Repository {
                 .getResultList();
     }
 
+    /**
+     *
+     * @param craftUserId .
+     * @param categoryName .
+     * @return .
+     */
     public Category getWithCraftUserIdAndCategoryName(Long craftUserId, String categoryName) {
         return getEntityManager()
                 .createQuery(FIND_CATEGORIES_WITH_CRAFT_USER_ID_AND_CATEGORY_NAME, Category.class)
