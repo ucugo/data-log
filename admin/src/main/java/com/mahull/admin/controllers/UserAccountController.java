@@ -46,9 +46,7 @@ public class UserAccountController extends BaseController {
             return ADD_NEW_USER_INFO_FORM;
         }
 
-        final boolean isUserAlreadyExist = isUserNameAlreadyExist(craftUser.getUserName());
-
-        if (!isUserAlreadyExist && !craftUser.isNew()) {
+        if (getUser(craftUser.getUserName()) == null && !craftUser.isNew()) {
             craftUser.setPassword(passwordEncoder.encode(craftUser.getPassword()));
             craftUserRepository.save(craftUser);
         } else {
@@ -58,7 +56,7 @@ public class UserAccountController extends BaseController {
         return ADD_NEW_USER_INFO_SUCCESS;
     }
 
-    private boolean isUserNameAlreadyExist(String userName) {
-        return craftUserRepository.getWithUserName(userName) != null;
+    private CraftUser getUser(String userName) {
+        return craftUserRepository.getWithUserName(userName);
     }
 }
