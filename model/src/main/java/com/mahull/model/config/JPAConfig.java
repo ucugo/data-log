@@ -13,10 +13,10 @@ import javax.persistence.EntityManagerFactory;
 /**
  * Created by Ugo on 05/03/2016.
  */
-@Configuration
 @EnableTransactionManagement
 @ComponentScan({"com.mahull"})
 @EntityScan(basePackages = {"com/mahull/model"})
+@Configuration
 public class JpaConfig {
 
     @Bean

@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 import static com.mahull.model.query.UserQuery.FIND_ITEMS_WITH_PURCHASED_DATE;
 import static com.mahull.model.query.UserQuery.FIND_ITEM_WITH_CRAFT_USER_AND_CATEGORY;
 import static com.mahull.model.query.UserQuery.FIND_ITEM_WITH_CRAFT_USER_ID;
-import static java.util.Objects.requireNonNull;
 
 /**
  * Created by Ugo on 11/04/2016.
@@ -87,7 +86,7 @@ public class ItemRepository extends Repository<Item> {
      */
     public List<Item> getItemsPurchasedInGivenPeriod(Date startDAte, Date endDate) {
         return getEntityManager()
-                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD)
+                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD, Item.class)
                 .setParameter("startDate", startDAte)
                 .setParameter("endDate", endDate)
                 .getResultList();
@@ -102,7 +101,7 @@ public class ItemRepository extends Repository<Item> {
      */
     public List<Item> getItemsPurchasedInGivenPeriodWithUserId(Date startDAte, Date endDate, Long craftUserId) {
         return getEntityManager()
-                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD_FOR_A_USER)
+                .createQuery(UserQuery.FIND_ITEMS_PURCHASED_WITHIN_PERIOD_FOR_A_USER, Item.class)
                 .setParameter("startDate", startDAte)
                 .setParameter("endDate", endDate)
                 .setParameter("craftUserId", craftUserId)
