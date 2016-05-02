@@ -13,6 +13,7 @@ import static com.mahull.admin.util.Constants.BIRTHS_LOGIN;
 import static com.mahull.admin.util.Constants.BIRTHS_REGISTER;
 import static com.mahull.admin.util.Constants.CONTEXT_ROOT;
 import static com.mahull.admin.util.Constants.HOME_VIEW;
+import static com.mahull.admin.util.Constants.ITEM;
 import static com.mahull.admin.util.Constants.NEW_USER;
 
 
@@ -31,6 +32,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController(CONTEXT_ROOT.concat(BIRTHS_LOGIN)).setViewName(BIRTHS_LOGIN);
         registry.addViewController(CONTEXT_ROOT.concat(BIRTHS_REGISTER)).setViewName(BIRTHS_REGISTER);
         registry.addViewController(CONTEXT_ROOT.concat(NEW_USER)).setViewName(NEW_USER);
+        registry.addViewController(CONTEXT_ROOT.concat(ITEM)).setViewName(ITEM);
     }
 
     @Override

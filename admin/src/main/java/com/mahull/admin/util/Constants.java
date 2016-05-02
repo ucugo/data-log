@@ -19,4 +19,9 @@ public interface Constants {
      */
     String ADD_NEW_USER_INFO_SUCCESS = "/account/new-user :: info-success";
     String ADD_NEW_USER_INFO_FORM = "/account/new-user :: info-form";
+
+    /**
+     * Inventory constants.
+     */
+    String ITEM = "inventory/item";
 }
