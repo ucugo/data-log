@@ -1,6 +1,9 @@
 package com.mahull.admin.controllers;
 
 import com.mahull.model.model.profile.CraftUser;
+import com.mahull.model.repositories.CraftUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,15 @@ import static com.mahull.admin.util.Constants.ADD_NEW_USER_INFO_SUCCESS;
 @Controller
 @RequestMapping(value = "/account/*")
 public class UserAccountController extends BaseController {
+
+    private final CraftUserRepository craftUserRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserAccountController(CraftUserRepository craftUserRepository, PasswordEncoder passwordEncoder) {
+        this.craftUserRepository = craftUserRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      *
@@ -46,7 +58,7 @@ public class UserAccountController extends BaseController {
             return ADD_NEW_USER_INFO_FORM;
         }
 
-        if (getUser(craftUser.getUserName()) == null && !craftUser.isNew()) {
+        if (getUser(craftUser.getUserName()) == null && craftUser.isNew()) {
             craftUser.setPassword(passwordEncoder.encode(craftUser.getPassword()));
             craftUserRepository.save(craftUser);
         } else {

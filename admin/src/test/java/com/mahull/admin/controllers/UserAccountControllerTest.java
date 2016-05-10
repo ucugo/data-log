@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserAccountControllerTest {
 
-    @InjectMocks
     private UserAccountController userAccountController;
 
     @Mock
@@ -39,11 +39,11 @@ public class UserAccountControllerTest {
     @Mock
     private CraftUserRepository craftUserRepository;
 
-    @Mock
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Before
     public void setUp() throws Exception {
+        userAccountController = new UserAccountController(craftUserRepository, encoder);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class UserAccountControllerTest {
 
         when(bindingResult.hasErrors()).thenReturn(false);
         when(craftUserRepository.getWithUserName(anyString())).thenReturn(craftUser);
-        when(craftUser.getId()).thenReturn(1l);
+        when(craftUser.isNew()).thenReturn(false);
 
         String response = userAccountController.addNewUser(craftUser, bindingResult);
 
@@ -64,7 +64,7 @@ public class UserAccountControllerTest {
 
         when(bindingResult.hasErrors()).thenReturn(false);
         when(craftUserRepository.getWithUserName(anyString())).thenReturn(null);
-        when(craftUser.getId()).thenReturn(null);
+        when(craftUser.isNew()).thenReturn(true);
         when(craftUser.getPassword()).thenReturn("any_password");
 
         String response = userAccountController.addNewUser(craftUser, bindingResult);

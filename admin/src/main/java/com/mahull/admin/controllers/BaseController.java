@@ -12,12 +12,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseController {
 
-    @Autowired
-    protected CraftUserRepository craftUserRepository;
-
-    @Autowired
-    protected PasswordEncoder passwordEncoder;
-
     protected CraftUser getCraftUser(HttpServletRequest request) {
 
         CraftUser craftUser = (CraftUser)request.getAttribute(CraftUser.REQUEST_SCOPED_ATTRIBUTE_NAME);
