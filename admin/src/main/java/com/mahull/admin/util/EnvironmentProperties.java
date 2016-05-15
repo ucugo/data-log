@@ -8,20 +8,17 @@ import org.springframework.stereotype.Service;
  * Created by Ugo on 17/03/2016.
  */
 @Service
-public class PropertiesFetcher {
+public class EnvironmentProperties {
 
     private final Environment environment;
 
     @Autowired
-    public PropertiesFetcher(Environment environment) {
+    public EnvironmentProperties(Environment environment) {
         this.environment = environment;
     }
 
     public String getEncryptedHashSalt() {
-        return getPropertyAsString("com.mahull.encrypted.hash.salt");
+        return environment.getRequiredProperty("com.mahull.encrypted.hash.salt", String.class);
     }
 
-    private String getPropertyAsString(String propertyName) {
-        return this.environment.getProperty(propertyName);
-    }
 }

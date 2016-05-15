@@ -40,8 +40,7 @@ public class UserAccountController extends BaseController {
     @RequestMapping(value = "new-user", method = RequestMethod.GET)
     public String show(Model model) {
 
-        CraftUser craftUser = new CraftUser();
-        model.addAttribute("craftUser", craftUser);
+        model.addAttribute("craftUser", new CraftUser());
         return ADD_NEW_USER_INFO_FORM;
     }
 
